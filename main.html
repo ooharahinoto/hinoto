@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H I N O T O | Personal Page</title>
+    <style>
+        /* 기본 스타일 및 레이아웃 (이전과 동일) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
+
+        nav {
+            width: 350px; 
+            background-color: #4a463a; 
+            color: white;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            text-align: right; 
+        }
+
+        nav h1 { font-size: 1.5rem; margin-bottom: 2.5rem; letter-spacing: 3px; }
+        nav ul { list-style: none; }
+        nav ul li { 
+            margin-bottom: 1.5rem; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            color: rgba(255,255,255,0.6); 
+            font-size: 1.1rem;
+        }
+        nav ul li:hover { color: #fff; transform: translateX(-8px); }
+        nav ul li.active { color: #fff; font-weight: bold; border-right: 3px solid #fff; padding-right: 10px; }
+
+        main {
+            flex: 1;
+            padding: 4rem;
+            overflow-y: auto;
+            background-color: #f9f2e4;
+        }
+
+        .content-section { display: none; max-width: 1000px; margin: 0 auto; }
+        .content-section.active { display: block; animation: fadeIn 0.6s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        h2 { color: #4a463a; margin-bottom: 1rem; }
+
+        /* ART 섹션 그리드 */
+        .art-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .art-item {
+            background: #ffffff;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(74, 70, 58, 0.08);
+            transition: 0.3s;
+            cursor: pointer; /* 클릭 가능함을 표시 */
+        }
+
+        .art-item:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(74, 70, 58, 0.15); }
+        .art-item img { width: 100%; height: 200px; object-fit: cover; background-color: #eee; }
+        .art-item-info { padding: 18px; }
+        .art-item-info strong { display: block; margin-bottom: 6px; color: #4a463a; }
+        .art-item-info span { color: #9a9587; font-size: 0.85rem; }
+
+        /* --- 모달 관련 CSS 추가 --- */
+        #image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        #image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* 모바일 대응 */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; padding: 2rem 1.5rem; text-align: center; justify-content: flex-start; }
+            nav ul { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+            nav ul li.active { border-right: none; border-bottom: 2px solid #fff; padding-right: 0; padding-bottom: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h1>H I N O T O</h1>
+        <ul>
+            <li onclick="showSection('TOP')" class="menu-item active">TOP</li>
+            <li onclick="showSection('PROFILE')" class="menu-item">PROFILE</li>
+            <li onclick="showSection('ARTS')" class="menu-item">ARTS</li>
+            <li onclick="showSection('LINK')" class="menu-item">LINK</li>
+        </ul>
+    </nav>
+
+    <main id="content-area">
+        <!-- 각 섹션 생략 (이전과 동일) -->
+        <section id="TOP" class="content-section active"><h2>Welcome</h2><hr style="margin:20px 0; border:0; border-top:1px solid rgba(74,70,58,0.1);"><p>메인 화면입니다.</p></section>
+        <section id="PROFILE" class="content-section"><h2>Profile</h2><hr style="margin:20px 0; border:0; border-top:1px solid rgba(74,70,58,0.1);"><p>프로필 정보를 입력해 주세요.</p></section>
+        
+        <section id="ARTS" class="content-section">
+            <h2>Arts Gallery</h2>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid rgba(74, 70, 58, 0.1);">
+            <div class="art-grid" id="art-container"></div>
+        </section>
+
+        <section id="LINK" class="content-section">
+            <h2>Links</h2>
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid rgba(74, 70, 58, 0.1);">
+            <ul style="list-style: none; line-height: 2;">
+                <li>X (Twitter): <a href="https://x.com/ooharahinoto" target="_blank" style="color: #4a463a; text-decoration: underline; font-weight: 500;">@ooharahinoto</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- 이미지 크게 보기 모달 레이어 -->
+    <div id="image-modal" onclick="closeModal()">
+        <img id="modal-img" src="" alt="Full Image">
+    </div>
+
+    <script>
+        // 메뉴 전환 기능
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+                if(item.textContent === sectionId) item.classList.add('active');
+            });
+        }
+
+        // ART 데이터
+        const artData = [
+            { title: "Artwork #01", date: "2026-05-15", img: "https://via.placeholder.com/800x600" },
+            { title: "Artwork #02", date: "2026-05-10", img: "https://via.placeholder.com/600x800" },
+            { title: "Artwork #03", date: "2026-05-01", img: "https://via.placeholder.com/1000x1000" },
+            { title: "Sketch Practice", date: "2026-04-20", img: "https://via.placeholder.com/1200x800" }
+        ];
+
+        // 갤러리 렌더링 - 클릭 이벤트 추가
+        function renderArts() {
+            const container = document.getElementById('art-container');
+            if(!container) return;
+            
+            container.innerHTML = artData.map(item => `
+                <div class="art-item" onclick="openModal('${item.img}')">
+                    <img src="${item.img}" alt="${item.title}">
+                    <div class="art-item-info">
+                        <strong>${item.title}</strong>
+                        <span>${item.date}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- 모달 제어 함수 추가 ---
+        function openModal(imgSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            modalImg.src = imgSrc;
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // 배경 스크롤 복구
+        }
+
+        window.onload = renderArts;
+    </script>
+</body>
+</html>
