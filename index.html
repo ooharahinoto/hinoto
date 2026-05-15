@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H I N O T O | Personal Page</title>
     <style>
-        /* 기본 스타일 및 레이아웃 (이전과 동일) */
+        /* 기본 스타일 및 레이아웃 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; display: flex; height: 100vh; overflow: hidden; }
 
@@ -61,7 +61,7 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(74, 70, 58, 0.08);
             transition: 0.3s;
-            cursor: pointer; /* 클릭 가능함을 표시 */
+            cursor: pointer;
         }
 
         .art-item:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(74, 70, 58, 0.15); }
@@ -70,7 +70,7 @@
         .art-item-info strong { display: block; margin-bottom: 6px; color: #4a463a; }
         .art-item-info span { color: #9a9587; font-size: 0.85rem; }
 
-        /* --- 모달 관련 CSS 추가 --- */
+        /* 모달 관련 CSS */
         #image-modal {
             display: none;
             position: fixed;
@@ -112,12 +112,10 @@
             <li onclick="showSection('TOP')" class="menu-item active">TOP</li>
             <li onclick="showSection('PROFILE')" class="menu-item">PROFILE</li>
             <li onclick="showSection('WORK')" class="menu-item">WORK</li>
-            <li onclick="showSection('LINK')" class="menu-item">LINK</li>
-        </ul>
+            <li onclick="showSection('CONTACT')" class="menu-item">CONTACT</li> </ul>
     </nav>
 
     <main id="content-area">
-        <!-- 각 섹션 생략 (이전과 동일) -->
         <section id="TOP" class="content-section active"><h2>Welcome</h2><hr style="margin:20px 0; border:0; border-top:1px solid rgba(74,70,58,0.1);"><p>Main Page</p></section>
         <section id="PROFILE" class="content-section"><h2>Profile</h2><hr style="margin:20px 0; border:0; border-top:1px solid rgba(74,70,58,0.1);"><p>Profile</p></section>
         
@@ -127,8 +125,8 @@
             <div class="art-grid" id="art-container"></div>
         </section>
 
-        <section id="LINK" class="content-section">
-            <h2>Links</h2>
+        <section id="CONTACT" class="content-section">
+            <h2>Contact</h2>
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid rgba(74, 70, 58, 0.1);">
             <ul style="list-style: none; line-height: 2;">
                 <li>X (Twitter): <a href="https://x.com/ooharahinoto" target="_blank" style="color: #4a463a; text-decoration: underline; font-weight: 500;">@ooharahinoto</a></li>
@@ -136,13 +134,11 @@
         </section>
     </main>
 
-    <!-- 이미지 크게 보기 모달 레이어 -->
     <div id="image-modal" onclick="closeModal()">
         <img id="modal-img" src="" alt="Full Image">
     </div>
 
     <script>
-        // 메뉴 전환 기능
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
@@ -152,7 +148,6 @@
             });
         }
 
-        // ART 데이터
         const artData = [
             { title: "Fan Art #03", date: "2026-05-15", img: "https://via.placeholder.com/600x800" },
             { title: "Fan Art #02", date: "2026-05-10", img: "https://via.placeholder.com/600x800" },
@@ -160,7 +155,6 @@
             { title: "Sketch Practice", date: "2026-04-20", img: "https://via.placeholder.com/1200x800" }
         ];
 
-        // 갤러리 렌더링 - 클릭 이벤트 추가
         function renderArts() {
             const container = document.getElementById('art-container');
             if(!container) return;
@@ -176,19 +170,18 @@
             `).join('');
         }
 
-        // --- 모달 제어 함수 추가 ---
         function openModal(imgSrc) {
             const modal = document.getElementById('image-modal');
             const modalImg = document.getElementById('modal-img');
             modalImg.src = imgSrc;
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             const modal = document.getElementById('image-modal');
             modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // 배경 스크롤 복구
+            document.body.style.overflow = 'auto';
         }
 
         window.onload = renderArts;
